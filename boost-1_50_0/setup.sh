@@ -35,6 +35,13 @@ build_install() {
     echo '$target is undefined'
     exit 1
   fi
+
+  if (( $(env python -c "import sys; print(sys.version_info[0])") > 2 )); then 
+      if (( $(env python2 -c "import sys; print(sys.version_info[0])") == 2 )); then 
+	  BOOTSTRAP_OPTS="--with-python=python2"
+      fi
+  fi
+
   COMMON_OPTS="
     --prefix=$target
     --layout=system
@@ -59,7 +66,7 @@ build_install() {
   "
   cd $build_dir &&
   mkdir -p build &&
-  test -x bjam || ./bootstrap.sh &&
+  test -x bjam || ./bootstrap.sh $BOOTSTRAP_OPTS &&
   ./bjam -q $COMMON_OPTS $LIBRARIES install || {
     if [ ! -f /usr/include/zlib.h ] ; then
       echo 'zlib.h was not found.'
