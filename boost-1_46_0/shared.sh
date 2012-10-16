@@ -1,19 +1,36 @@
 #!/bin/sh
 
-version=1_50_0
+if [ -z "$build" ] ; then
+  echo '$build is undefined'
+  exit 1
+fi
+if [ -z "$package_dir" ] ; then
+  echo '$build is undefined'
+  exit 1
+fi
+
+package=boost
+source=${package}_$version.tar.bz2
+build_dir=$build/${package}_$version
+url=http://osdn.dl.sourceforge.net/project/boost/boost/${version//_/.}/$source
+
+download_unpack() {
+  cd $build &&
+  download_http $source $url &&
+  message "unpacking $package" &&
+  tar -xf $source &&
+  message "finished unpacking $package"
+}
+
+pre_build() {
+  true
+}
 
 build_install() {
   if [ -z "$target" ] ; then
     echo '$target is undefined'
     exit 1
   fi
-
-  if (( $(env python -c "import sys; print(sys.version_info[0])") > 2 )); then 
-      if (( $(env python2 -c "import sys; print(sys.version_info[0])") == 2 )); then 
-	  BOOTSTRAP_OPTS="--with-python=python2"
-      fi
-  fi
-
   COMMON_OPTS="
     --prefix=$target
     --layout=system
@@ -38,19 +55,25 @@ build_install() {
   "
   cd $build_dir &&
   mkdir -p build &&
-  test -x bjam || ./bootstrap.sh $BOOTSTRAP_OPTS &&
+  test -x bjam || ./bootstrap.sh &&
   ./bjam -q $COMMON_OPTS $LIBRARIES install || {
+    local needed="false"
     if [ ! -f /usr/include/zlib.h ] ; then
       echo 'zlib.h was not found.'
+      needed="true"
     fi
     if [ ! -f /usr/include/bzlib.h ] ; then
       echo 'bzlib.h was not found'
+      needed="true"
     fi
-    PYTHON_NEEDED=`ls /usr/include/python*/Python.h &>/dev/null && echo false || echo true`
+    local PYTHON_NEEDED=`ls /usr/include/python*/Python.h &>/dev/null && echo false || echo true`
     if [ "$PYTHON_NEEDED" = "true" ] ; then
       echo 'Python.h was not found'
+      needed="true"
     fi
-    echo "Install the packages containing the above header files to compile boost properly."
+    if [ "$needed" = "true" ] ; then
+      echo "Install the packages containing the above header files to compile boost properly."
+    fi
     exit 1
   }
 }
