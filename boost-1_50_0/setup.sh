@@ -1,6 +1,34 @@
 #!/bin/sh
 
+
+if [ -z "$build" ] ; then
+  echo '$build is undefined'
+  exit 1
+fi
+if [ -z "$package_dir" ] ; then
+  echo '$build is undefined'
+  exit 1
+fi
+
+
+package=boost
 version=1_50_0
+source=${package}_$version.tar.bz2
+build_dir=$build/${package}_$version
+url=http://osdn.dl.sourceforge.net/project/boost/boost/${version//_/.}/$source
+
+download_unpack() {
+  cd $build &&
+  download_http $source $url &&
+  message "unpacking $package" &&
+  tar -xf $source &&
+  message "finished unpacking $package"
+}
+
+
+pre_build() {
+  true
+}
 
 build_install() {
   if [ -z "$target" ] ; then
