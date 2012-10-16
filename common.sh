@@ -36,7 +36,7 @@ download_http() {
   url="$2"
   name="$1"
   if which wget &>/dev/null; then
-    wget -c -O "$name" "$url"
+    wget -q -c -O "$name" "$url" 
   elif which curl &>/dev/null; then
     curl -C - -o "$name"  "$url"
   else 
