@@ -174,17 +174,17 @@ include(CTest)
 
 if( BUILD_TESTING )
 
-add_executable( testcudd cudd/testcudd.c ) 
-target_link_libraries(testcudd CUDD_cudd m)
-add_test(testcudd testcudd ${CMAKE_CURRENT_SOURCE_DIR}/cudd/r7x8.1.mat)
+#add_executable( testcudd cudd/testcudd.c ) 
+#target_link_libraries(testcudd CUDD_cudd m)
+#add_test(testcudd testcudd ${CMAKE_CURRENT_SOURCE_DIR}/cudd/r7x8.1.mat)
 
 
-add_executable( testmtr mtr/testmtr.c ) 
-target_link_libraries(testmtr CUDD_mtr CUDD_util)
-add_test(testmtr testmtr ${CMAKE_CURRENT_SOURCE_DIR}/mtr/test.groups)
+#add_executable( testmtr mtr/testmtr.c ) 
+#target_link_libraries(testmtr CUDD_mtr CUDD_util)
+#add_test(testmtr testmtr ${CMAKE_CURRENT_SOURCE_DIR}/mtr/test.groups)
 
-add_executable( testdddmp dddmp/testdddmp.c ) 
-target_link_libraries(testdddmp CUDD_dddmp m)
+#add_executable( testdddmp dddmp/testdddmp.c ) 
+#target_link_libraries(testdddmp CUDD_dddmp m)
 #add_test(testdddmp testdddmp )
 
 endif()
