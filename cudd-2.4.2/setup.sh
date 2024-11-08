@@ -15,7 +15,7 @@ package=cudd
 version=2.4.2
 source=$package-$version.tar.gz
 build_dir=$build/$package-$version
-url=ftp://vlsi.colorado.edu/pub/$source
+url=https://github.com/davidkebo/cudd/blob/main/cudd_versions/cudd-2.4.2.tar.gz
 
 download_unpack() {
   cd $build &&
