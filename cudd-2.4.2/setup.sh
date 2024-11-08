@@ -15,7 +15,7 @@ package=cudd
 version=2.4.2
 source=$package-$version.tar.gz
 build_dir=$build/$package-$version
-url=https://github.com/davidkebo/cudd/blob/main/cudd_versions/cudd-2.4.2.tar.gz
+url=https://src.fedoraproject.org/repo/pkgs/cudd/cudd-2.4.2.tar.gz/f037f3e486db93a9a1161e285f488e9c/cudd-2.4.2.tar.gz
 
 download_unpack() {
   cd $build &&
