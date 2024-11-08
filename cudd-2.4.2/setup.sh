@@ -20,7 +20,7 @@ url=https://github.com/davidkebo/cudd/blob/main/cudd_versions/cudd-2.4.2.tar.gz
 download_unpack() {
   cd $build &&
   [ -f $source ] || wget -O $source $url &&
-  tar -xf $source
+  tar -xzvf $source
 }
 
 
